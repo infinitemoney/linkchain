@@ -451,13 +451,7 @@ func (s *PublicBlockChainAPI) GetBlockUTXOsByNumber(ctx context.Context, blockNr
 	block, err := s.b.BlockByNumber(ctx, blockNr)
 	tokenOutputSeqs := s.b.GetBlockTokenOutputSeq(ctx, uint64(blockNr))
 	if block != nil {
-		response := rtypes.NewRPCBlockUTXO(block, true, fullTx, tokenOutputSeqs)
-		if blockNr == rpc.PendingBlockNumber {
-			// Pending blocks need to nil out a few fields
-			response.Coinbase = nil
-			response.Hash = nil
-		}
-		return response, err
+		return rtypes.NewRPCBlockUTXO(block, true, fullTx, tokenOutputSeqs), nil
 	}
 	return nil, err
 }

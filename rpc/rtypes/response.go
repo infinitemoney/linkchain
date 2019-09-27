@@ -225,7 +225,6 @@ type RPCBlock struct {
 	GasUsed         hexutil.Uint64   `json:"gasUsed"`
 	Bloom           types.Bloom      `json:"logsBloom"`
 	Txs             Txs              `json:"transactions"`
-	TokenOutputSeqs map[string]int64 `json:"token_output_seqs"`
 }
 
 // NewRPCBlock converts the given block to the RPC output which depends on fullTx. If inclTx is true transactions are
@@ -276,28 +275,23 @@ func NewRPCBlock(b *types.Block, inclTx bool, fullTx bool) *RPCBlock {
 	return block
 }
 
+type RPCBlockUTXO struct {
+	Height          hexutil.Uint64     `json:"number"`
+	Txs             Txs              `json:"transactions"`
+	TokenOutputSeqs map[string]int64 `json:"token_output_seqs"`
+}
+
 // NewRPCBlockUTXO converts the given block to the RPC output which depends on fullTx. If inclTx is true transactions are
 // returned. When fullTx is true the returned block contains full transaction details, otherwise it will only contain
 // transaction hashes.
 // only return utxo txs.
-func NewRPCBlockUTXO(b *types.Block, inclTx bool, fullTx bool, tokenOutputSeqs map[string]int64) *RPCBlock {
+func NewRPCBlockUTXO(b *types.Block, inclTx bool, fullTx bool, tokenOutputSeqs map[string]int64) *RPCBlockUTXO {
 	if b == nil || b.Header == nil {
 		return nil
 	}
 	head := b.Header // copies the header once
-	hash := b.Hash()
-	block := &RPCBlock{
-		Height:          (*hexutil.Big)(big.NewInt(int64(head.Height))),
-		Hash:            &hash,
-		Coinbase:        &head.Coinbase,
-		Time:            (*hexutil.Big)(big.NewInt(int64(head.Time))),
-		ParentHash:      head.ParentHash,
-		DataHash:        head.DataHash,
-		StateHash:       b.StateHash,
-		ReceiptHash:     head.ReceiptHash,
-		GasLimit:        hexutil.Uint64(head.GasLimit),
-		GasUsed:         hexutil.Uint64(head.GasUsed),
-		Bloom:           head.Bloom(),
+	block := &RPCBlockUTXO{
+		Height:          (hexutil.Uint64)(head.Height),
 		TokenOutputSeqs: tokenOutputSeqs,
 	}
 
@@ -324,7 +318,6 @@ func NewRPCBlockUTXO(b *types.Block, inclTx bool, fullTx bool, tokenOutputSeqs m
 			}
 		default:
 		}
-
 	}
 	block.Txs = transactions
 
