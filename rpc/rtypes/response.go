@@ -213,18 +213,18 @@ func (t *Txs) UnmarshalJSON(input []byte) error {
 
 type rpcBlockAlias RPCBlock
 type RPCBlock struct {
-	Height          *hexutil.Big     `json:"number"`
-	Hash            *common.Hash     `json:"hash"`
-	Coinbase        *common.Address  `json:"miner"`
-	Time            *hexutil.Big     `json:"timestamp"`
-	ParentHash      common.Hash      `json:"parentHash"`
-	DataHash        common.Hash      `json:"transactionsRoot"`
-	StateHash       common.Hash      `json:"stateRoot"`
-	ReceiptHash     common.Hash      `json:"receiptsRoot"`
-	GasLimit        hexutil.Uint64   `json:"gasLimit"`
-	GasUsed         hexutil.Uint64   `json:"gasUsed"`
-	Bloom           types.Bloom      `json:"logsBloom"`
-	Txs             Txs              `json:"transactions"`
+	Height      *hexutil.Big    `json:"number"`
+	Hash        *common.Hash    `json:"hash"`
+	Coinbase    *common.Address `json:"miner"`
+	Time        *hexutil.Big    `json:"timestamp"`
+	ParentHash  common.Hash     `json:"parentHash"`
+	DataHash    common.Hash     `json:"transactionsRoot"`
+	StateHash   common.Hash     `json:"stateRoot"`
+	ReceiptHash common.Hash     `json:"receiptsRoot"`
+	GasLimit    hexutil.Uint64  `json:"gasLimit"`
+	GasUsed     hexutil.Uint64  `json:"gasUsed"`
+	Bloom       types.Bloom     `json:"logsBloom"`
+	Txs         Txs             `json:"transactions"`
 }
 
 // NewRPCBlock converts the given block to the RPC output which depends on fullTx. If inclTx is true transactions are
@@ -276,7 +276,7 @@ func NewRPCBlock(b *types.Block, inclTx bool, fullTx bool) *RPCBlock {
 }
 
 type RPCBlockUTXO struct {
-	Height          hexutil.Uint64     `json:"number"`
+	Height          hexutil.Uint64   `json:"number"`
 	Txs             Txs              `json:"transactions"`
 	TokenOutputSeqs map[string]int64 `json:"token_output_seqs"`
 }
@@ -291,7 +291,7 @@ func NewRPCBlockUTXO(b *types.Block, inclTx bool, fullTx bool, tokenOutputSeqs m
 	}
 	head := b.Header // copies the header once
 	block := &RPCBlockUTXO{
-		Height:          (hexutil.Uint64)(head.Height),
+		Height:          hexutil.Uint64(head.Height),
 		TokenOutputSeqs: tokenOutputSeqs,
 	}
 
