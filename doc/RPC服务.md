@@ -61,6 +61,7 @@
 - [lk_getLogs](#lk_getlogs)
 - [lk_getTransaction](#lk_gettransaction)
 - [lk_getTransactionCount](#lk_gettransactioncount)
+- [lk_subscribe](#lk_subscribe)
 
 ----
 
@@ -1294,3 +1295,21 @@ Websocket接口，同 [eth_getTransactionByHash](#eth_gettransactionbyhash)
 
 ### lk_getTransactionCount
 Websocket接口，同 [eth_getTransactionCount](#eth_gettransactioncount)
+
+### lk_subscribe
+Websocket接口，订阅
+
+#### 参数
+1. `string` 订阅名称，如 `logsSubscribe`、`balanceRecordsSubscribe`、`blockSubscribe`、`receiptsSubscribe`
+2. `object` 参数，可选
+
+#### 返回
+执行订阅成功后会马上返回订阅ID；当有匹配的事件发生时，会收到带有相关数据的通知将及订阅ID
+
+#### 示例
+```
+>> {"id": 1, "method": "lk_subscribe", "params": ["logsSubscribe", {"addrs": ["0xece83486ee491ee1e7e901b4c494fa8d38627ee2"], "topics": [["0x8842899e9be9f8182eb6ede21c9a5b3036330f25eb83a84c2542a75cdb381782"]]}]}
+<< {"jsonrpc":"2.0","id":2,"result":"0x4a8a4c0517381924f9838102c5a4dcb7"}
+
+<< {"jsonrpc":"2.0","method":"lk_subscription","params": {"subscription":"0x4a8a4c0517381924f9838102c5a4dcb7","result":{"address":"0xece83486ee491ee1e7e901b4c494fa8d38627ee2","blockHash":"0x61cdb2a09ab99abf791d474f20c2ea89bf8de2923a2d42bb49944c8c993cbf04","blockNumber":"0x29e87","data":"0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003","logIndex":"0x0","topics":["0x8842899e9be9f8182eb6ede21c9a5b3036330f25eb83a84c2542a75cdb381782"],"transactionHash":"0xe044554a0a55067caafd07f8020ab9f2af60bdfe337e395ecd84b4877a3d1ab4","transactionIndex":"0x0"}}}
+```
