@@ -5315,16 +5315,8 @@ var transactionFromBlockCall = function (args) {
     return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getTransactionByBlockHashAndIndex' : 'eth_getTransactionByBlockNumberAndIndex';
 };
 
-var uncleCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getUncleByBlockHashAndIndex' : 'eth_getUncleByBlockNumberAndIndex';
-};
-
 var getBlockTransactionCountCall = function (args) {
     return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getBlockTransactionCountByHash' : 'eth_getBlockTransactionCountByNumber';
-};
-
-var uncleCountCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'eth_getUncleCountByBlockHash' : 'eth_getUncleCountByBlockNumber';
 };
 
 function Eth(web3) {
@@ -5466,13 +5458,6 @@ var methods = function () {
         call: 'eth_signTransaction',
         params: 1,
         inputFormatter: [formatters.inputTransactionFormatter]
-    });
-
-    var sign = new Method({
-        name: 'sign',
-        call: 'eth_sign',
-        params: 2,
-        inputFormatter: [formatters.inputAddressFormatter, null]
     });
 
     var tokenCall = new Method({
@@ -5633,7 +5618,6 @@ var methods = function () {
         signTransaction,
         sendTransaction,
         sendTokenTransaction,
-        sign,
         validators,
         getBlockByNumber,
         getBlockBalanceRecordsByNumber,
@@ -5822,25 +5806,6 @@ var methods = function () {
         inputFormatter: [null,null]
     });
 
-    var importRawKey = new Method({
-        name: 'importRawKey',
-		call: 'personal_importRawKey',
-		params: 2
-    });
-
-    var sign = new Method({
-        name: 'sign',
-		call: 'personal_sign',
-		params: 3,
-		inputFormatter: [null, formatters.inputAddressFormatter, null]
-    });
-
-    var ecRecover = new Method({
-        name: 'ecRecover',
-		call: 'personal_ecRecover',
-		params: 2
-    });
-
     var unlockAccount = new Method({
         name: 'unlockAccount',
         call: 'personal_unlockAccount',
@@ -5864,10 +5829,7 @@ var methods = function () {
 
     return [
         newAccount,
-        importRawKey,
         unlockAccount,
-        ecRecover,
-        sign,
         sendTransaction,
         lockAccount
     ];

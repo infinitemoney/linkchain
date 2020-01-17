@@ -31,6 +31,7 @@ var Modules = map[string]string{
 	"shh":        Shh_JS,
 	"swarmfs":    SWARMFS_JS,
 	"txpool":     TxPool_JS,
+	"lk":         LK_JS,
 }
 
 const Chequebook_JS = `
@@ -236,176 +237,6 @@ web3._extend({
 			params: 1,
 			inputFormatter: [web3._extend.formatters.inputBlockNumberFormatter]
 		}),
-		new web3._extend.Method({
-			name: 'dumpBlock',
-			call: 'debug_dumpBlock',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'vmodule',
-			call: 'debug_vmodule',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'backtraceAt',
-			call: 'debug_backtraceAt',
-			params: 1,
-		}),
-		new web3._extend.Method({
-			name: 'stacks',
-			call: 'debug_stacks',
-			params: 0,
-			outputFormatter: console.log
-		}),
-		new web3._extend.Method({
-			name: 'freeOSMemory',
-			call: 'debug_freeOSMemory',
-			params: 0,
-		}),
-		new web3._extend.Method({
-			name: 'setGCPercent',
-			call: 'debug_setGCPercent',
-			params: 1,
-		}),
-		new web3._extend.Method({
-			name: 'memStats',
-			call: 'debug_memStats',
-			params: 0,
-		}),
-		new web3._extend.Method({
-			name: 'gcStats',
-			call: 'debug_gcStats',
-			params: 0,
-		}),
-		new web3._extend.Method({
-			name: 'cpuProfile',
-			call: 'debug_cpuProfile',
-			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'startCPUProfile',
-			call: 'debug_startCPUProfile',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'stopCPUProfile',
-			call: 'debug_stopCPUProfile',
-			params: 0
-		}),
-		new web3._extend.Method({
-			name: 'goTrace',
-			call: 'debug_goTrace',
-			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'startGoTrace',
-			call: 'debug_startGoTrace',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'stopGoTrace',
-			call: 'debug_stopGoTrace',
-			params: 0
-		}),
-		new web3._extend.Method({
-			name: 'blockProfile',
-			call: 'debug_blockProfile',
-			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'setBlockProfileRate',
-			call: 'debug_setBlockProfileRate',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'writeBlockProfile',
-			call: 'debug_writeBlockProfile',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'mutexProfile',
-			call: 'debug_mutexProfile',
-			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'setMutexProfileFraction',
-			call: 'debug_setMutexProfileFraction',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'writeMutexProfile',
-			call: 'debug_writeMutexProfile',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'writeMemProfile',
-			call: 'debug_writeMemProfile',
-			params: 1
-		}),
-		new web3._extend.Method({
-			name: 'traceBlock',
-			call: 'debug_traceBlock',
-			params: 2,
-			inputFormatter: [null, null]
-		}),
-		new web3._extend.Method({
-			name: 'traceBlockFromFile',
-			call: 'debug_traceBlockFromFile',
-			params: 2,
-			inputFormatter: [null, null]
-		}),
-		new web3._extend.Method({
-			name: 'traceBadBlock',
-			call: 'debug_traceBadBlock',
-			params: 1,
-			inputFormatter: [null]
-		}),
-		new web3._extend.Method({
-			name: 'traceBlockByNumber',
-			call: 'debug_traceBlockByNumber',
-			params: 2,
-			inputFormatter: [null, null]
-		}),
-		new web3._extend.Method({
-			name: 'traceBlockByHash',
-			call: 'debug_traceBlockByHash',
-			params: 2,
-			inputFormatter: [null, null]
-		}),
-		new web3._extend.Method({
-			name: 'traceTransaction',
-			call: 'debug_traceTransaction',
-			params: 2,
-			inputFormatter: [null, null]
-		}),
-		new web3._extend.Method({
-			name: 'preimage',
-			call: 'debug_preimage',
-			params: 1,
-			inputFormatter: [null]
-		}),
-		new web3._extend.Method({
-			name: 'getBadBlocks',
-			call: 'debug_getBadBlocks',
-			params: 0,
-		}),
-		new web3._extend.Method({
-			name: 'storageRangeAt',
-			call: 'debug_storageRangeAt',
-			params: 5,
-		}),
-		new web3._extend.Method({
-			name: 'getModifiedAccountsByNumber',
-			call: 'debug_getModifiedAccountsByNumber',
-			params: 2,
-			inputFormatter: [null, null],
-		}),
-		new web3._extend.Method({
-			name: 'getModifiedAccountsByHash',
-			call: 'debug_getModifiedAccountsByHash',
-			params: 2,
-			inputFormatter:[null, null],
-		}),
 	],
 	properties: []
 });
@@ -415,23 +246,6 @@ const Eth_JS = `
 web3._extend({
 	property: 'eth',
 	methods: [
-		new web3._extend.Method({
-			name: 'chainId',
-			call: 'eth_chainId',
-			params: 0
-		}),
-		new web3._extend.Method({
-			name: 'sign',
-			call: 'eth_sign',
-			params: 2,
-			inputFormatter: [web3._extend.formatters.inputAddressFormatter, null]
-		}),
-		new web3._extend.Method({
-			name: 'resend',
-			call: 'eth_resend',
-			params: 3,
-			inputFormatter: [web3._extend.formatters.inputTransactionFormatter, web3._extend.utils.fromDecimal, web3._extend.utils.fromDecimal]
-		}),
 		new web3._extend.Method({
 			name: 'signTransaction',
 			call: 'eth_signTransaction',
@@ -472,17 +286,6 @@ web3._extend({
 			name: 'sendRawTx',
 			call: 'eth_sendRawTx',
 			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'getLogs',
-			call: 'eth_getLogs',
-			params: 1
-		}),
-	],
-	properties: [
-		new web3._extend.Property({
-			name: 'pendingTransactions',
-			getter: 'eth_pendingTransactions'
 		}),
 	]
 });
@@ -550,22 +353,6 @@ const Personal_JS = `
 web3._extend({
 	property: 'personal',
 	methods: [
-		new web3._extend.Method({
-			name: 'importRawKey',
-			call: 'personal_importRawKey',
-			params: 2
-		}),
-		new web3._extend.Method({
-			name: 'sign',
-			call: 'personal_sign',
-			params: 3,
-			inputFormatter: [null, web3._extend.formatters.inputAddressFormatter, null]
-		}),
-		new web3._extend.Method({
-			name: 'ecRecover',
-			call: 'personal_ecRecover',
-			params: 2
-		}),
 		new web3._extend.Method({
 			name: 'openWallet',
 			call: 'personal_openWallet',
@@ -662,14 +449,6 @@ web3._extend({
 	properties:
 	[
 		new web3._extend.Property({
-			name: 'content',
-			getter: 'txpool_content'
-		}),
-		new web3._extend.Property({
-			name: 'inspect',
-			getter: 'txpool_inspect'
-		}),
-		new web3._extend.Property({
 			name: 'status',
 			getter: 'txpool_status',
 			outputFormatter: function(status) {
@@ -680,5 +459,18 @@ web3._extend({
 			}
 		}),
 	]
+});
+`
+
+const LK_JS = `
+web3._extend({
+	property: 'lk',
+	methods: [
+		new web3._extend.Method({
+			name: 'getLogs',
+			call: 'lk_getLogs',
+			params: 1
+		}),
+	],
 });
 `

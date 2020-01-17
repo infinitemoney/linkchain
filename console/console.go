@@ -168,13 +168,9 @@ func (c *Console) init(preload []string) error {
 			if _, err = c.jsre.Run(`jeth.newAccount = personal.newAccount;`); err != nil {
 				return fmt.Errorf("personal.newAccount: %v", err)
 			}
-			if _, err = c.jsre.Run(`jeth.sign = personal.sign;`); err != nil {
-				return fmt.Errorf("personal.sign: %v", err)
-			}
 			obj.Set("openWallet", bridge.OpenWallet)
 			obj.Set("unlockAccount", bridge.UnlockAccount)
 			obj.Set("newAccount", bridge.NewAccount)
-			obj.Set("sign", bridge.Sign)
 		}
 	}
 	// The admin.sleep and admin.sleepBlocks are offered by the console and not by the RPC layer.
