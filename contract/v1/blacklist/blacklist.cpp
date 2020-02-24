@@ -2,11 +2,11 @@
 #include <string>
 
 #define ContractCommitteeAddr "0x0000000000000000000000436f6d6d6974746565"
-#define EmptyAddress         "0x0000000000000000000000000000000000000000"
+#define EmptyAddress          "0x0000000000000000000000000000000000000000"
 #define RKEY                  "right"
 #define AddressLength         42
-#define MintAdminKey          "default" // TODO
-#define MintWhitelistKey      "default" // TODO
+#define MintAdminKey          "blacklist"
+#define MintWhitelistKey      "blacklist"
 
 const tc::Address GetRightAccount(const std::string& right) {
 	tc::Address addr;
